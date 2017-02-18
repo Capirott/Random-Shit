@@ -4,8 +4,12 @@ using namespace std;
 
 
 class Smarthphone {
-
-		
+private:
+	string model;
+protected:
+	Smarthphone(string model) : model(model) {}
+public:
+	string getModel() { return model; }		
 };
 
 enum TYPE {
@@ -16,35 +20,31 @@ enum TYPE {
 
 class Factory {
 public:
-	virtual Smarthphone* create() = 0;
+	virtual Smarthphone* createSmarthphone(TYPE type) = 0;
 };
 
 class G5 : public Smarthphone {
 public:
-	void ayylmao() {
-		cout << "YOOOOOOO\n";
-	}
-	
+	G5() : Smarthphone("G5") {}
 };
 
 class J7 : public Smarthphone {
 public:
-		void ayylmao() {
-		cout << "LIXO\n";
-	}
-	
+	J7() : Smarthphone("J7") {}	
 };
 
 class iPhone6 : public Smarthphone {
-	
-	
+public:
+	iPhone6() : Smarthphone("iPhone6") {}
 };
 	
 class Samsung : public Factory {
-	
-
+private: 
+	static Factory* factory;
+	Samsung(){}
 public:
-	static Smarthphone* create(TYPE type){
+	Smarthphone* createSmarthphone(TYPE type)
+	{
 		switch (type)
 		{
 			case J7_:
@@ -54,12 +54,19 @@ public:
 				return 0;
 		}
 	}	
-	
+	static Factory* getFactory() 
+	{
+		return factory = (factory ? factory : new Samsung);
+	}
 };
 
 class Apple : public Factory {
+private:	
+	Apple() {}
+	static Factory* factory;
 public:
-	static Smarthphone* create(TYPE type){
+	Smarthphone* createSmarthphone(TYPE type)
+	{
 		switch (type)
 		{
 			case IPHONE6_:
@@ -68,15 +75,20 @@ public:
 			default:
 				return 0;
 		};
+	}
+	static Factory* getFactory() 
+	{
+		return factory = (factory ? factory : new Apple);
 	}	
-	
-
 };
 
 class LG : public Factory {
-	
+private:
+	static Factory* factory;
+	LG() {}
 public:
-	static Smarthphone* create(TYPE type){
+	Smarthphone* createSmarthphone(TYPE type)
+	{
 		switch (type)
 		{
 			case G5_:
@@ -86,13 +98,19 @@ public:
 				return 0;
 		}
 	}	
-	
+	static Factory* getFactory() 
+	{
+		return factory = (factory ? factory : new LG);
+	}	
 };
 
+Factory* LG::factory = 0;
+Factory* Apple::factory = 0;
+Factory* Samsung::factory = 0;
+
+
 int main( void ) {
-	
-	((G5 *)LG::create(G5_))->ayylmao();
-	((J7 *)LG::create(J7_))->ayylmao(); 
+	cout <<((Samsung::getFactory())->createSmarthphone(J7_))->getModel();
 	return 0;
 
 }
