@@ -18,10 +18,6 @@ extern "C" {
  
 using namespace luabridge;
  
-void printMessage(const std::string& s) {
-    std::cout << s << std::endl;
-}
- 
 
 template <typename T>
 void addComponent(Entity* e, luabridge::LuaRef& componentTable) {
@@ -48,8 +44,7 @@ Entity* loadEntity(lua_State* L, const std::string& type) {
     return e;
 }
 
-
-int main() {
+void* lua_interpreter(void *arg){
 	lua_State* L = luaL_newstate();
 	luaL_openlibs(L);
 	 
@@ -61,5 +56,5 @@ int main() {
 	std::cout << e->getType() << " says: " << npcc->getPhrase() << std::endl;
  
 	lua_close(L);
- 
+	return nullptr; 
 }

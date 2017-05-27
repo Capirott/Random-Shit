@@ -8,3 +8,9 @@ g++ -std=c++11 main.cpp -o Breakout -llua5.3 -I ./LuaBridge/ -I ./src/ luahelper
 
 
 g++ -std=c++11 main.cpp -o Breakout -llua5.3 -I ./LuaBridge/ -I ./src/ ./src/luahelperfunctions.cpp ./src/graphicscomponent.cpp ./src/entity.cpp ./src/npccomponent.cpp 
+
+
+
+
+
+g++ -std=c++11 main.cpp -o Breakout -pthread -llua5.3 -I ./include/LuaBridge/ -I ./src/ ./src/luahelperfunctions.cpp ./src/graphicscomponent.cpp ./src/entity.cpp ./src/npccomponent.cpp ./src/opengl.cpp -lglfw -lGLEW -lGL -lSOIL

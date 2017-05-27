@@ -1,5 +1,6 @@
 #include "opengl.h"
 #include <iostream>
+#include "mainlua.h"
 
 #ifdef __linux
 #include <pthread.h>
@@ -12,29 +13,15 @@
 
 
 #ifdef __linux
-
 pthread_t tid[2];
-
-void* consoleInput(void *arg)
-{
-    unsigned long i = 0;
-    pthread_t id = pthread_self();
-    float a;
-    std::cin >> a;
-    while (a) {
-	tmp += glm::vec3(a, 0.0f, 0.0f);
-	std::cin >> a;
-    }
-
-    return NULL;
-}
-
 #endif
 
+Entity *player = 0;
+
 int main(void) {	
-	pthread_create(&(tid[0]), NULL, &start, NULL); // Starts GUI thread
-	pthread_create(&(tid[1]), NULL, &consoleInput, NULL); // Starts console IO thread
-	pthread_join(tid[0], 0);
+	pthread_create(&(tid[0]), nullptr, &start, nullptr); // Starts GUI thread
+	pthread_create(&(tid[1]), nullptr, &lua_interpreter, nullptr); // Starts console IO thread
+	pthread_join(tid[0], 0); // Waiting for GUI thread.
 	return 0;
 }
 
