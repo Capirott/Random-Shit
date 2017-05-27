@@ -1,0 +1,7 @@
+g++ -std=c++11 main.cpp -c -llua5.3 -I ./LuaBridge/ -I ./LuaSrc/ ./LuaSrc/*.cpp
+
+
+g++ -std=c++11 main.cpp -o Breakout -llua5.3 -I ./LuaBridge/ -I ./LuaSrc/ luahelperfunctions.o graphicscomponent.o entity.o npccomponent.o Breakout
+
+
+g++ -std=c++11 main.cpp -o Breakout -llua5.3 -I ./LuaBridge/ -I ./LuaSrc/ ./LuaSrc/luahelperfunctions.cpp ./LuaSrc/graphicscomponent.cpp ./LuaSrc/entity.cpp ./LuaSrc/npccomponent.cpp 
