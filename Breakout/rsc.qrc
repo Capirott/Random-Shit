@@ -1,9 +1,9 @@
 <RCC>
+    <qresource prefix="/script">
+        <file>script/entity.lua</file>
+    </qresource>
     <qresource prefix="/shader">
         <file>shader/default.frag</file>
-        <file>shader/default.vs</file>
-    </qresource>
-    <qresource prefix="/image">
-        <file>image/brick.jpg</file>
+        <file>shader/default.vert</file>
     </qresource>
 </RCC>

@@ -23,9 +23,7 @@
 
 // Defines definition
 
-#define IMAGE_DIR std::string("/image/")
-#define SHADE_DIR std::string("/shader/")
-
+#define PROJECT_DIR std::string("/home/capirott/Random-Shit/Breakout/")
 
 const GLuint WIDTH = 800, HEIGHT = 600;
 

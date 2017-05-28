@@ -1,5 +1,6 @@
 #include "opengl.h"
 
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -35,7 +36,7 @@ void* start(void *args){
 
 
 	// Build and compile our shader program
-	Shader ourShader((SHADE_DIR + "default.vs").c_str(), (SHADE_DIR + "default.frag").c_str());
+    Shader ourShader((PROJECT_DIR + "shader/default.vert").c_str(), (PROJECT_DIR + "shader/default.frag").c_str());
 
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
@@ -54,7 +55,7 @@ void* start(void *args){
 		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
 		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
 		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
@@ -119,7 +120,7 @@ void* start(void *args){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// Load, create texture and generate mipmaps
 	int width, height;
-	unsigned char* image = SOIL_load_image((IMAGE_DIR + "brick.png").c_str(), &width, &height, 0, SOIL_LOAD_RGB);
+    unsigned char* image = SOIL_load_image((PROJECT_DIR + "image/brick.jpg").c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(image);
@@ -136,7 +137,7 @@ void* start(void *args){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// Load, create texture and generate mipmaps
-	image = SOIL_load_image((IMAGE_DIR + "brick.jpg").c_str(), &width, &height, 0, SOIL_LOAD_RGB);
+    image = SOIL_load_image((PROJECT_DIR + "image/brick.jpg").c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(image);

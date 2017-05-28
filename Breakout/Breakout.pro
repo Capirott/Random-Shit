@@ -1,18 +1,20 @@
 TEMPLATE = app
-CONFIG += console c++11
+CONFIG += console c++14
 CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
     src/opengl.cpp \
-    src/entity.cpp
+    src/entity.cpp \
+    src/luainterpreter.cpp
 
 HEADERS += \
     src/breakout.h \
     src/opengl.h \
     src/shader.h \
     src/entity.h \
-    inc/sol.hpp
+    inc/sol.hpp \
+    src/luainterpreter.h
 
 
 LIBS += \
@@ -26,4 +28,3 @@ LIBS += \
 RESOURCES += \
     rsc.qrc
 
-DISTFILES +=

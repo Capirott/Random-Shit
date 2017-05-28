@@ -1,3 +1,7 @@
+#include "inc/sol.hpp"
+#include "glm/glm.hpp"
+
+
 using EntityId = int;
 
 class Entity {
@@ -5,6 +9,7 @@ class Entity {
 private:
 	std::string name;
 	EntityId id;
+    glm::vec3 position;
 
 public:
 	explicit Entity(EntityId id) :

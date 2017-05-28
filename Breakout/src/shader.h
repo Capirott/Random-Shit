@@ -91,8 +91,7 @@ public:
 
     }
     // Uses the current shader
-    void Use() 
-    { 
+    void Use() {
         glUseProgram(this->Program); 
     }
 };
