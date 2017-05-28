@@ -1,36 +1,49 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+using EntityId = int;
 
-#include <map>
-#include <string>
-#include <typeindex>
- 
-class Component;
- 
 class Entity {
-public:
-    ~Entity();
-    void addComponent(std::type_index type, Component* c);
- 
-    template <typename T>
-    T* get() {
-        auto it = components.find(std::type_index(typeid(T)));
-        if (it != components.end()) {
-            return dynamic_cast<T*>(it->second);
-        }
-        return nullptr;
-    }
-     
-    void setType(const std::string& type) {
-        this->type = type;
-    }
- 
-    std::string getType() const {
-        return type;
-    }
+
 private:
-    std::string type;
-    std::map<std::type_index, Component*> components;
+	std::string name;
+	EntityId id;
+
+public:
+	explicit Entity(EntityId id) :
+	name("John"), id(id)
+	{}
+
+	const std::string& getName() const { return name; }
+	void setName(const std::string& n) { name = n; }
+	EntityId getId() const { return id; }
+
 };
 
-#endif
+
+
+class EntityManager {
+
+private:
+	std::unordered_map<EntityId, std::unique_ptr<Entity>> entities;
+	EntityId idCounter;
+	sol::state &lua;
+
+public: 
+	EntityManager(sol::state &lua) : idCounter(0), lua(lua) {}
+
+	Entity& createEntity() {
+		auto id = idCounter;
+		++idCounter;
+
+		auto inserted = entities.emplace(id, std::make_unique<Entity>(id));
+		auto it = inserted.first; // iterator to created id/Entity pair
+		auto& e = *it->second; // created entity
+		lua["createHandle"](e);
+		return e;
+	}
+
+	void removeEntity(EntityId id) {
+		lua["onEntityRemoved"](id);
+		entities.erase(id);
+	}
+
+};
+

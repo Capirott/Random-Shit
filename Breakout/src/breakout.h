@@ -1,18 +1,16 @@
 #ifndef BREAKOUT_H
 #define BREAKOUT_H
 
-#define NUMBER_OF_BLOCKS
+class Entity;
 
 class Breakout {
-
+	
 private:
-	int lives;	
-		
+	Entity *player;
+	Entity *blocks;	
 	
 
-public:
-	int getLives(int lives);
-	void setLives(int lives);
+public:		
 
 };
 
