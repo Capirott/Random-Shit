@@ -6,7 +6,10 @@ CONFIG -= qt
 SOURCES += main.cpp \
     src/opengl.cpp \
     src/entity.cpp \
-    src/luainterpreter.cpp
+    src/luainterpreter.cpp \
+    src/entitymanager.cpp \
+    src/component.cpp \
+    src/lifecomponent.cpp
 
 HEADERS += \
     src/breakout.h \
@@ -14,7 +17,10 @@ HEADERS += \
     src/shader.h \
     src/entity.h \
     inc/sol.hpp \
-    src/luainterpreter.h
+    src/luainterpreter.h \
+    src/entitymanager.h \
+    src/component.h \
+    src/lifecomponent.h
 
 
 LIBS += \
@@ -27,4 +33,6 @@ LIBS += \
 
 RESOURCES += \
     rsc.qrc
+
+DISTFILES +=
 

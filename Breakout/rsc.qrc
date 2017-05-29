@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/script">
         <file>script/entity.lua</file>
+        <file>script/breakout.lua</file>
     </qresource>
     <qresource prefix="/shader">
         <file>shader/default.frag</file>

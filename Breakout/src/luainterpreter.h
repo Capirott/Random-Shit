@@ -9,11 +9,9 @@ void* lua_interpreter(void *args);
 
 class LuaInterpreter
 {
-private:
-    static sol::state lua;
-
-
 public:
+    static sol::state lua;
+    static void load_interpreter();
     LuaInterpreter();
 };
 

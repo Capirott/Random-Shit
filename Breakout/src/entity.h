@@ -1,54 +1,55 @@
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include "inc/sol.hpp"
 #include "glm/glm.hpp"
+#include <typeindex>
+#include <map>
 
-
-using EntityId = int;
+#include "component.h"
 
 class Entity {
 
 private:
-	std::string name;
-	EntityId id;
-    glm::vec3 position;
+    int id;
+
+    float x;
+    float y;
+    float z;
+
+    std::map<std::type_index, Component *> component;
+
+    std::string type;
 
 public:
-	explicit Entity(EntityId id) :
-	name("John"), id(id)
-	{}
+    explicit Entity(int id);
+    ~Entity();
+    int getId() const { return id; }
 
-	const std::string& getName() const { return name; }
-	void setName(const std::string& n) { name = n; }
-	EntityId getId() const { return id; }
+    float getX() const;
+    void setX(float value);
+    float getY() const;
+    void setY(float value);
+    float getZ() const;
+    void setZ(float value);
+    glm::vec3 getvec3();
 
-};
+    std::vector<float> getPosition();
+    void setPosition(const sol::table &position);
+    std::string getType() const;
+    void setType(const std::string &value);
 
+    void addComponent(std::type_index type, Component *c);
 
-
-class EntityManager {
-
-private:
-	std::unordered_map<EntityId, std::unique_ptr<Entity>> entities;
-	EntityId idCounter;
-	sol::state &lua;
-
-public: 
-	EntityManager(sol::state &lua) : idCounter(0), lua(lua) {}
-
-	Entity& createEntity() {
-		auto id = idCounter;
-		++idCounter;
-
-		auto inserted = entities.emplace(id, std::make_unique<Entity>(id));
-		auto it = inserted.first; // iterator to created id/Entity pair
-		auto& e = *it->second; // created entity
-		lua["createHandle"](e);
-		return e;
-	}
-
-	void removeEntity(EntityId id) {
-		lua["onEntityRemoved"](id);
-		entities.erase(id);
-	}
+    template <typename T>
+    T* get() {
+        auto it = component.find(std::type_index(typeid(T)));
+        if (it != component.end()) {
+            return dynamic_cast<T*>(it->second);
+        }
+        return nullptr;
+    }
 
 };
 
+#endif

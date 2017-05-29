@@ -1,44 +1,51 @@
 #include "luainterpreter.h"
+#include "entitymanager.h"
 #include "entity.h"
 #include "opengl.h"
 
 
-LuaInterpreter::LuaInterpreter()
-{
-
-}
-
+sol::state LuaInterpreter::lua = sol::state();
 
 
 void* lua_interpreter(void *args)
 {
-    sol::state lua;
+    sol::state &lua = *(sol::state *)args;
+
+    EntityManager &entityManager = *EntityManager::getEntityManager();
+
     lua.open_libraries();
 
     lua.new_usertype<Entity>("Entity",
-        "getName", &Entity::getName,
-        "setName", &Entity::setName,
-        "getId", &Entity::getId
+        sol::constructors<Entity(int)>(),
+        "id", sol::readonly_property(&Entity::getId),
+        "x", sol::property(&Entity::getX, &Entity::setX),
+        "y", sol::property(&Entity::getY, &Entity::setY),
+        "z", sol::property(&Entity::getZ, &Entity::setZ),
+        "position", sol::property(&Entity::getPosition, &Entity::setPosition)
     );
 
+    lua.new_usertype<EntityManager>("EntityManager",
+        "create", &EntityManager::create,
+        "remove", &EntityManager::remove
+    );
+
+    lua["EntityManager"] = std::ref(entityManager);
 
     lua.do_file(PROJECT_DIR + "script/entity.lua");
 
 
-    EntityManager entityManager(lua);
-    auto& entity = entityManager.createEntity();
 
-    lua["test"](entity);
-
-    std::cout << "Testing bad reference" << std::endl;
-    lua["testBadReference"](entity);
-
+    std::cout << "Starting lua interpreter!\n";
     std::string line;
-    while (true) {
-        try {
+    while (true)
+    {
+        try
+        {
+            std::cout << ">> ";
             std::getline(std::cin, line);
             lua.script(line);
-        } catch (sol::error er) {
+        } catch (sol::error er)
+        {
             std::cout << er.what() << std::endl;
         }
     }

@@ -1,14 +1,16 @@
 #ifndef BREAKOUT_H
 #define BREAKOUT_H
 
-class Entity;
+
+
+#include "entitymanager.h"
+#include "entity.h"
 
 class Breakout {
 	
 private:
-	Entity *player;
-	Entity *blocks;	
-	
+
+    std::unordered_map<int, std::unique_ptr<Entity>> block;
 
 public:		
 
