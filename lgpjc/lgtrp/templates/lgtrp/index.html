@@ -1,5 +1,12 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"/>
+{% extends 'lgtrp/base.html' %}
+{% load bootstrap3 %}
+
+
+{% block title %}
+    Schools
+{% endblock %}
+
+{% block content %}
 
 {% if school_list %}
 	<ul>
@@ -19,6 +26,13 @@
 	{% endfor %}
 	</ul>
 {% else %}
-	<p> No schools are available.</p>
+	<p> </p>
+    {% bootstrap_alert "No schools are available." alert_type='warning' %}
+
 {% endif %}
 
+    {% bootstrap_button 'NEW STUDENT' size='sm' icon='glyphicon glyphicon-user'%}
+
+    {% bootstrap_button 'SCHOOL INFORMATION' size='sm' icon='info-sign' %}
+
+{% endblock %}
