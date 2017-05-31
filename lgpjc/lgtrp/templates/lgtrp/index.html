@@ -3,36 +3,10 @@
 
 
 {% block title %}
-    Schools
+    Home
 {% endblock %}
 
 {% block content %}
 
-{% if school_list %}
-	<ul>
-	{% for school in school_list %}
-		<li>
-			<h1><a href="{% url 'lgtrp:school' school.id%}">Students from {{ school.name }}</a></h1>
-			<ul>
-				{% if school.students.all %}
-					{% for student in school.students.all %}
-						<li><a href="{% url 'lgtrp:student' student.id %}">{{ student.name }}</a></li>
-					{% endfor %}
-				{% else %}
-					<li>No students are available.</li>
-				{% endif %}
-			</ul>
-		</li>
-	{% endfor %}
-	</ul>
-{% else %}
-	<p> </p>
-    {% bootstrap_alert "No schools are available." alert_type='warning' %}
-
-{% endif %}
-
-    {% bootstrap_button 'NEW STUDENT' size='sm' icon='glyphicon glyphicon-user'%}
-
-    {% bootstrap_button 'SCHOOL INFORMATION' size='sm' icon='info-sign' %}
 
 {% endblock %}

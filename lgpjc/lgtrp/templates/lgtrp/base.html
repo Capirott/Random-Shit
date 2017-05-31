@@ -5,11 +5,10 @@
 {% block bootstrap3_content %}
     <div class="container">
         <h1>{% block title %}(no title){% endblock %}</h1>
-
         <p>
             <a href="{% url 'lgtrp:index' %}">Home</a>
-            <a href="{% url 'lgtrp:index' %}">School</a>
-            <a href="{% url 'lgtrp:index' %}">Student</a>
+            <a href="{% url 'lgtrp:school' %}">School</a>
+            <a href="{% url 'lgtrp:student' %}">Student</a>
         </p>
 
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}

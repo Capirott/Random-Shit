@@ -1,3 +1,36 @@
-<h1>{{ school.name }}</h1>
+{% extends 'lgtrp/base.html' %}
+{% load bootstrap3 %}
 
 
+{% block title %}
+    Schools
+{% endblock %}
+
+{% block content %}
+
+{% if school_list %}
+	<ul>
+	{% for school in school_list %}
+		<li>
+			<h1><a href="{% url 'lgtrp:school_info' school.id%}">Students from {{ school.name }}</a></h1>
+			<ul>
+				{% if school.students.all %}
+					{% for student in school.students.all %}
+						<li><a href="{% url 'lgtrp:student_info' student.id %}">{{ student.name }}</a></li>
+					{% endfor %}
+				{% else %}
+					<li>No students are available.</li>
+				{% endif %}
+			</ul>
+		</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> </p>
+    {% bootstrap_alert "No schools are available." alert_type='warning' %}
+
+{% endif %}
+
+    {% bootstrap_button 'NEW SCHOOL' size='sm' icon='info-sign' %}
+
+{% endblock %}

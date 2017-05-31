@@ -1,3 +1,25 @@
-<h1>{{ student.name }}</h1>
+{% extends 'lgtrp/base.html' %}
+{% load bootstrap3 %}
 
 
+{% block title %}
+     Students
+{% endblock %}
+
+{% block content %}
+
+{% if student_list %}
+	<ul>
+	{% for student in student_list %}
+		<li><a href="{% url 'lgtrp:student_info' student.id %}">{{ student.name }}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> </p>
+    {% bootstrap_alert "No students are available." alert_type='warning' %}
+
+{% endif %}
+
+    {% bootstrap_button 'NEW STUDENT' size='sm' icon='glyphicon glyphicon-user'%}
+
+{% endblock %}
