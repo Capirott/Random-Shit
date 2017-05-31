@@ -11,7 +11,7 @@
 {% if student_list %}
 	<ul>
 	{% for student in student_list %}
-		<li><a href="{% url 'lgtrp:student_info' student.id %}">{{ student.name }}</a></li>
+		<li><a href="{% url 'lgtrp:student_update' student.id %}">{{ student.name }}</a></li>
 	{% endfor %}
 	</ul>
 {% else %}
@@ -20,6 +20,6 @@
 
 {% endif %}
 
-    {% bootstrap_button 'NEW STUDENT' size='sm' icon='glyphicon glyphicon-user'%}
+    {% bootstrap_button 'NEW STUDENT' size='sm' icon='glyphicon glyphicon-user' href='new'%}
 
 {% endblock %}
