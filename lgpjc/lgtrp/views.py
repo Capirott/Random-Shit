@@ -27,17 +27,33 @@ class StudentView(generic.ListView):
 	template_name = 'lgtrp/student.html'
 
 	def get_queryset(self):
-        	return School.objects.order_by('-name')
+        	return Student.objects.order_by('-name')
 
 class SchoolView(generic.ListView):
 	model = School
 	context_object_name = 'school_list'
 	template_name = 'lgtrp/school.html'
+	
 	def get_queryset(self):
 		return School.objects.order_by('-name')
 
 
 class StudentCreateView(generic.CreateView):
 	model = Student
-	fields = ['name']
-
+	fields = ['name', 'gender', 'registration_date']
+	template_name = 'lgtrp/student_new.html'
+	
+class SchoolCreateView(generic.CreateView):
+	model = School
+	fields = ['name', 'students', 'registration_date']
+	template_name = 'lgtrp/school_new.html'
+	
+class StudentUpdateView(generic.UpdateView):
+	model = Student
+	fields = ['name', 'gender', 'registration_date']
+	template_name = 'lgtrp/student_update.html'
+	
+class SchoolUpdateView(generic.UpdateView):
+	model = School
+	fields = ['name', 'students', 'registration_date']
+	template_name = 'lgtrp/school_update.html'
