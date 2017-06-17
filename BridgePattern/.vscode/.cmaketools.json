@@ -1,0 +1,77 @@
+{
+  "variant": {
+    "label": "Debug",
+    "keywordSettings": {
+      "buildType": "debug"
+    },
+    "description": "Emit debug information without performing optimizations"
+  },
+  "activeEnvironments": [],
+  "codeModel": {
+    "configurations": [
+      {
+        "name": "Debug",
+        "projects": [
+          {
+            "buildDirectory": "/home/capirott/Bridge/build",
+            "name": "Bridge",
+            "sourceDirectory": "/home/capirott/Bridge",
+            "targets": [
+              {
+                "artifacts": [
+                  "/home/capirott/Bridge/main.exe"
+                ],
+                "buildDirectory": "/home/capirott/Bridge/build",
+                "fileGroups": [
+                  {
+                    "compileFlags": "-g  ",
+                    "includePath": [
+                      {
+                        "path": "/home/capirott/Bridge/include"
+                      },
+                      {
+                        "path": "/home/capirott/Bridge/src"
+                      }
+                    ],
+                    "isGenerated": false,
+                    "language": "C",
+                    "sources": [
+                      "include/glad/glad.c"
+                    ]
+                  },
+                  {
+                    "compileFlags": "-g   -std=gnu++11",
+                    "includePath": [
+                      {
+                        "path": "/home/capirott/Bridge/include"
+                      },
+                      {
+                        "path": "/home/capirott/Bridge/src"
+                      }
+                    ],
+                    "isGenerated": false,
+                    "language": "CXX",
+                    "sources": [
+                      "main.cpp"
+                    ]
+                  }
+                ],
+                "fullName": "main.exe",
+                "linkFlags": "-rdynamic",
+                "linkLanguageFlags": "-g",
+                "linkLibraries": "../lib/libglfw3.a -lGLU -lGL -lGLU -pthread -lrt -lXinerama -lXrandr -lXxf86vm -lXi -lXcursor -lfreetype -lX11 -lm -lGL -ldl",
+                "linkerLanguage": "CXX",
+                "name": "main.exe",
+                "sourceDirectory": "/home/capirott/Bridge",
+                "type": "EXECUTABLE"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "cookie": "0.1583901350937218",
+    "inReplyTo": "codemodel",
+    "type": "reply"
+  }
+}
