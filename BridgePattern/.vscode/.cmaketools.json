@@ -13,24 +13,24 @@
         "name": "Debug",
         "projects": [
           {
-            "buildDirectory": "/home/capirott/Bridge/build",
+            "buildDirectory": "/home/capirott/random-shit/BridgePattern/build",
             "name": "Bridge",
-            "sourceDirectory": "/home/capirott/Bridge",
+            "sourceDirectory": "/home/capirott/random-shit/BridgePattern",
             "targets": [
               {
                 "artifacts": [
-                  "/home/capirott/Bridge/main.exe"
+                  "/home/capirott/random-shit/BridgePattern/main.exe"
                 ],
-                "buildDirectory": "/home/capirott/Bridge/build",
+                "buildDirectory": "/home/capirott/random-shit/BridgePattern/build",
                 "fileGroups": [
                   {
                     "compileFlags": "-g  ",
                     "includePath": [
                       {
-                        "path": "/home/capirott/Bridge/include"
+                        "path": "/home/capirott/random-shit/BridgePattern/include"
                       },
                       {
-                        "path": "/home/capirott/Bridge/src"
+                        "path": "/home/capirott/random-shit/BridgePattern/src"
                       }
                     ],
                     "isGenerated": false,
@@ -43,10 +43,10 @@
                     "compileFlags": "-g   -std=gnu++11",
                     "includePath": [
                       {
-                        "path": "/home/capirott/Bridge/include"
+                        "path": "/home/capirott/random-shit/BridgePattern/include"
                       },
                       {
-                        "path": "/home/capirott/Bridge/src"
+                        "path": "/home/capirott/random-shit/BridgePattern/src"
                       }
                     ],
                     "isGenerated": false,
@@ -62,7 +62,7 @@
                 "linkLibraries": "../lib/libglfw3.a -lGLU -lGL -lGLU -pthread -lrt -lXinerama -lXrandr -lXxf86vm -lXi -lXcursor -lfreetype -lX11 -lm -lGL -ldl",
                 "linkerLanguage": "CXX",
                 "name": "main.exe",
-                "sourceDirectory": "/home/capirott/Bridge",
+                "sourceDirectory": "/home/capirott/random-shit/BridgePattern",
                 "type": "EXECUTABLE"
               }
             ]
@@ -70,7 +70,7 @@
         ]
       }
     ],
-    "cookie": "0.1583901350937218",
+    "cookie": "0.14353432374809527",
     "inReplyTo": "codemodel",
     "type": "reply"
   }
