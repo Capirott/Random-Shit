@@ -30,23 +30,10 @@ set( ADDITIONAL_LIBS
     -ldl
 )
 
-set(ALL_LIBS
-    ${OPENGL_LIBRARY}
-)
-
-set(INCLUDE_PATH
-  ${OPENGL_INCLUDE_DIR}
-  ${GLFW_INCLUDE_DIR}
-  ${GLAD_INCLUDE_DIR}
-)
-
 set(LIBRARIES
-  ${OPENGL_LIBRARIES}
-  ${X11_LIBRARIES}
   ${ADDITIONAL_LIBS}  
 )
 
 add_executable(main.exe main.cpp include/glad/glad.c)
-
 
 target_link_libraries(main.exe ${PROJECT_SOURCE_DIR}/lib/libglfw3.a ${LIBRARIES})
