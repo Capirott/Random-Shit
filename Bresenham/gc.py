@@ -6,14 +6,14 @@ GREEN = (  0, 255,   0)
 RED =   (255,   0,   0)
 GREY =  (100, 100, 100)
 size = [600, 600]
-lmfao = 1
+lmfao = 2
 def main():
     pygame.init()
     screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("Bresenham Algorithm Line Demo")
+    pygame.display.set_caption("Bresenham Algorithm Demo")
     done = False
     clock = pygame.time.Clock()
-    pixel = 50
+    pixel = 300
     pixel_size = [size[0] / pixel, size[1] / pixel]
     fist_pixel = None
     second_pixel = None
@@ -40,14 +40,16 @@ def main():
             pygame.draw.rect(screen, BLUE, (fist_pixel[0], fist_pixel[1], pixel_size[0], pixel_size[1]), 0)
             if (lmfao == 1):
                 if (second_pixel != None):
-                    for v in bresenham([fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1]], [second_pixel[0] / pixel_size[0], second_pixel[1] / pixel_size[1]]):
+                    for v in bresenham_line([fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1]], [second_pixel[0] / pixel_size[0], second_pixel[1] / pixel_size[1]]):
                         pygame.draw.rect(screen, BLUE, (v[0] * pixel_size[0], v[1] * pixel_size[1], pixel_size[0], pixel_size[1]), 0)
                     pygame.draw.line(screen, GREEN, [fist_pixel[0] + pixel_size[0] / 2, fist_pixel[1] + pixel_size[1] / 2],  [second_pixel[0] + pixel_size[0] / 2, second_pixel[1] + pixel_size[1] / 2], 1)
-                else:
-                    print "HAHHA"
+            elif (second_pixel != None):
+                radius = math.sqrt((fist_pixel[0] - second_pixel[0]) ** 2 + (fist_pixel[1] - second_pixel[1]) ** 2) / 2.0
+                for v in bresenham_circle(fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1], int(radius)):
+                   pygame.draw.rect(screen, BLUE, (v[0] * pixel_size[0], v[1] * pixel_size[1], pixel_size[0], pixel_size[1]), 0)
         pygame.display.flip()
     pygame.quit()
-def bresenham(a, b):
+def bresenham_line(a, b):
     lst = []
     x0 = a[0]
     y0 = a[1]
@@ -95,6 +97,35 @@ def bresenham(a, b):
         lst.append([y1, x1])
     else:
         lst.append([x1, y1])
+    return lst;
+
+def bresenham_circle(x0, y0, r):
+    lst = []
+    d = 5 - 4 * r
+    x = 0
+    y = r
+    deltaA = (-2*r + 5)*4
+    deltaB = 3*4
+    while x <= y:
+        lst.append([x0 + x, y0 + y])
+        lst.append([x0 - x, y0 + y])
+        lst.append([x0 + x, y0 - y])
+        lst.append([x0 - x, y0 - y])
+        lst.append([x0 + y, y0 + x])
+        lst.append([x0 - y, y0 + x])
+        lst.append([x0 + y, y0 - x])
+        lst.append([x0 - y, y0 - x])
+        if d > 0:
+            d += deltaA
+            y -= 1
+            x += 1
+            deltaA += 4 * 4
+            deltaB += 2 * 2
+        else:
+            d += deltaB
+            x += 1
+            deltaA += 2 * 4
+            deltaB += 2 * 4
     return lst;
 
 def abs(v):
