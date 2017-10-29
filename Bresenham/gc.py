@@ -26,7 +26,7 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == RIGHT:
-                lmfao = (lmfao + 1) % 3
+                lmfao = (lmfao + 1) % 4
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
                 x, y = event.pos
                 if fist_pixel == None:
@@ -45,16 +45,16 @@ def main():
             pygame.draw.rect(screen, BLUE, (fist_pixel[0], fist_pixel[1], pixel_size[0], pixel_size[1]), 0)
             if (second_pixel != None):
                 lst = []
-                if (lmfao == 0):
-                    lst = bresenham_line([fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1]], [second_pixel[0] / pixel_size[0], second_pixel[1] / pixel_size[1]])
-                elif (lmfao == 1):
+                if (lmfao == 0 or lmfao == 3):
+                    lst += bresenham_line([fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1]], [second_pixel[0] / pixel_size[0], second_pixel[1] / pixel_size[1]])
+                if (lmfao == 1 or lmfao == 3):
                     radius = math.sqrt(((fist_pixel[0] - second_pixel[0]) / pixel_size[0]) ** 2 + ((fist_pixel[1] - second_pixel[1]) / pixel_size[1]    ) ** 2)
                     radius = math.floor(radius)
-                    lst = bresenham_circle(fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1], int(radius))
-                else:
+                    lst += bresenham_circle(fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1], int(radius))
+                if (lmfao == 2 or lmfao == 3):
                     a = math.fabs(fist_pixel[0] - second_pixel[0]) / pixel_size[0]
                     b = math.fabs(fist_pixel[1] - second_pixel[1]) / pixel_size[1]
-                    lst = bresenham_ellipse(fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1], a, b)
+                    lst += bresenham_ellipse(fist_pixel[0] / pixel_size[0], fist_pixel[1] / pixel_size[1], a, b)
                 for v in lst:
                     pygame.draw.rect(screen, BLUE, (v[0] * pixel_size[0], v[1] * pixel_size[1], pixel_size[0], pixel_size[1]), 0)
         pygame.display.flip()
