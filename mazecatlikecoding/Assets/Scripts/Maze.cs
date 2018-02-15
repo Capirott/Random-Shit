@@ -29,7 +29,6 @@ public class Maze : MonoBehaviour {
     {
         return cells[coordinates.x, coordinates.z];
     }
-
     public IEnumerator Generate()
     {
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
@@ -40,6 +39,10 @@ public class Maze : MonoBehaviour {
         {
             yield return delay;
             DoNextGenerationStep(activeCells);
+        }
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            rooms[i].Hide();
         }
     }
 
