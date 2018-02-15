@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class MazeCell : MonoBehaviour {
 
+    public MazeRoom room;
     public IntVector2 coordinates;
     private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+
+    public void Initialize(MazeRoom room)
+    {
+        room.Add(this);
+        transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+    }
 
     public MazeCellEdge GetEdge(MazeDirection direction)
     {
