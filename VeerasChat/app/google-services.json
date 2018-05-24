@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "455405880615",
+    "firebase_url": "https://veeraschat-20cbe.firebaseio.com",
+    "project_id": "veeraschat-20cbe",
+    "storage_bucket": "veeraschat-20cbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455405880615:android:b894fefb394bd79a",
+        "android_client_info": {
+          "package_name": "com.capirott.erick.veeraschat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455405880615-d51hn4h2otisicni2gkv9d9q1tiqoagv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capirott.erick.veeraschat",
+            "certificate_hash": "3c8bc4066eb364b3ad0d52b4a9e35f017ffa497b"
+          }
+        },
+        {
+          "client_id": "455405880615-ijgtpeqg3i1htc6best4f3ulgfpqavje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD8fEBvlXU67MI0xxanwY2Urmj18mzQEU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455405880615-ijgtpeqg3i1htc6best4f3ulgfpqavje.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
