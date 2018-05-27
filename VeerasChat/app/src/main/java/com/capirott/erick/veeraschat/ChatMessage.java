@@ -4,14 +4,15 @@ import java.util.Date;
 
 public class ChatMessage {
 
-    private String messageText;
-    private String messageUser;
+    private String userId;
+
+    private String text;
 
     private long messageTime;
 
-    public ChatMessage(String messageText, String messageUser) {
-        this.messageText = messageText;
-        this.messageUser = messageUser;
+    public ChatMessage(String text, String userId) {
+        this.userId = userId;
+        this.text = text;
 
         // Initialize to current time
         messageTime = new Date().getTime();
@@ -21,20 +22,20 @@ public class ChatMessage {
 
     }
 
-    public String getMessageText() {
-        return messageText;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getMessageUser() {
-        return messageUser;
+    public String getText() {
+        return text;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public long getMessageTime() {

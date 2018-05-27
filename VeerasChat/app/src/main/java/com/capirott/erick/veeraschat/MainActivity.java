@@ -19,7 +19,9 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         .setValue(new ChatMessage(input.getText().toString(),
                                 FirebaseAuth.getInstance()
                                         .getCurrentUser()
-                                        .getDisplayName())
+                                        .getUid())
                         );
 
                 // Clear the input
@@ -79,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void displayChatMessages() {
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query query = databaseReference.orderByChild("messageTime").getRef().getDatabase().getReference();
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference()) {
+                R.layout.message, query) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
                 // Get references to the views of message.xml
@@ -90,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
                 // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
+                messageText.setText(model.getText());
+                messageUser.setText(model.getUserId());
 
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                         model.getMessageTime()));
             }
         };
-
         listOfMessages.setAdapter(adapter);
+        listOfMessages.setEmptyView(findViewById(R.id.empty_element));
     }
 
     @Override
