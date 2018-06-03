@@ -1,4 +1,4 @@
-package com.capirott.erick.veeraschat;
+package com.capirott.erick.veeraschat.models;
 
 import java.util.Date;
 

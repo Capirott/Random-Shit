@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">VeerasChat</string>
     <string name="empty_messages">NO MESSAGES AVAILABLE!</string>
+    <string name="empty_contacts">NO CONTACTS AVAILABLE!</string>
 </resources>

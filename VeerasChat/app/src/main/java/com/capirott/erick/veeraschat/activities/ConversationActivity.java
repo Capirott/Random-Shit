@@ -1,6 +1,5 @@
-package com.capirott.erick.veeraschat;
+package com.capirott.erick.veeraschat.activities;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.capirott.erick.veeraschat.R;
+import com.capirott.erick.veeraschat.models.ChatMessage;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,38 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class MainActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity {
 
-    private static final int SIGN_IN_REQUEST_CODE = 10;
     private FirebaseListAdapter<ChatMessage> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-            // Start sign in/sign up activity
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .build(),
-                    SIGN_IN_REQUEST_CODE
-            );
-        } else {
-            // User is already signed in. Therefore, display
-            // a welcome Toast
-            Toast.makeText(this,
-                    "Welcome " + FirebaseAuth.getInstance()
-                            .getCurrentUser()
-                            .getDisplayName(),
-                    Toast.LENGTH_LONG)
-                    .show();
-
-            // Load chat room contents
-            displayChatMessages();
-        }
-
+        setContentView(R.layout.activity_conversation);
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
 
@@ -78,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 input.setText("");
             }
         });
+
+        displayChatMessages();
     }
+
     private void displayChatMessages() {
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -106,33 +86,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == SIGN_IN_REQUEST_CODE) {
-            if(resultCode == RESULT_OK) {
-                Toast.makeText(this,
-                        "Successfully signed in. Welcome!",
-                        Toast.LENGTH_LONG)
-                        .show();
-                displayChatMessages();
-            } else {
-                Toast.makeText(this,
-                        "We couldn't sign you in. Please try again later.",
-                        Toast.LENGTH_LONG)
-                        .show();
-
-                // Close the app
-                finish();
-            }
-        }
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.conversation_menu, menu);
         MenuItem itemToHide = menu.findItem(R.id.menu_delete_message);
         itemToHide.setVisible(false);
         return true;
@@ -145,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(MainActivity.this,
+                            Toast.makeText(ConversationActivity.this,
                                     "You have been signed out.",
                                     Toast.LENGTH_LONG)
                                     .show();
@@ -157,4 +112,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

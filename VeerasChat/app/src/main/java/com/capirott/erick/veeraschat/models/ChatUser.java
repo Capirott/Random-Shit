@@ -1,10 +1,10 @@
-package com.capirott.erick.veeraschat;
+package com.capirott.erick.veeraschat.models;
 
 import java.util.Collection;
 
 public class ChatUser {
 
-    String userId;
+    String id;
 
     String name;
 
@@ -14,12 +14,12 @@ public class ChatUser {
 
     Collection<String> conversationKeys;
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

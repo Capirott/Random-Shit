@@ -9,5 +9,4 @@
         <item android:title="Sign out" app:showAsAction="never"
             android:id="@+id/menu_sign_out"/>
 
-
 </menu>
