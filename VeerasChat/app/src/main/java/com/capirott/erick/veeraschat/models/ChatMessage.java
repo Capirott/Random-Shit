@@ -4,22 +4,32 @@ import java.util.Date;
 
 public class ChatMessage {
 
+    private String id;
+
     private String userId;
 
     private String text;
 
-    private long messageTime;
+    private String imageBase64;
+
+    private long time;
 
     public ChatMessage(String text, String userId) {
-        this.userId = userId;
         this.text = text;
-
-        // Initialize to current time
-        messageTime = new Date().getTime();
+        this.userId = userId;
+        this.time = new Date().getTime();
     }
 
-    public ChatMessage(){
+    public String getId() {
+        return id;
+    }
 
+    public ChatMessage(String userId) {
+        this.userId = userId;
+    }
+
+    public ChatMessage() {
+        return;
     }
 
     public String getUserId() {
@@ -38,11 +48,19 @@ public class ChatMessage {
         this.text = text;
     }
 
-    public long getMessageTime() {
-        return messageTime;
+    public String getImageBase64() {
+        return imageBase64;
     }
 
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

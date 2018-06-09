@@ -4,15 +4,15 @@ import java.util.Collection;
 
 public class ChatUser {
 
-    String id;
+    private String id;
 
-    String name;
+    private String nickname;
 
-    String nickName;
+    private String email;
 
-    ChatContactList contactList;
+    private String password;
 
-    Collection<String> conversationKeys;
+    private Collection<String> conversationsId;
 
     public String getId() {
         return id;
@@ -22,27 +22,39 @@ public class ChatUser {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public ChatContactList getContactList() {
-        return contactList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContactList(ChatContactList contactList) {
-        this.contactList = contactList;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<String> getConversationsId() {
+        return conversationsId;
+    }
+
+    public void setConversationsId(Collection<String> conversationsId) {
+        this.conversationsId = conversationsId;
+    }
+
+    public void addConversationId(String id) {
+        this.conversationsId.add(id);
     }
 }

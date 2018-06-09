@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             // Start sign in/sign up activity
             startActivityForResult(
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     SIGN_IN_REQUEST_CODE
             );
+            loadNextActivity();
         } else {
             // User is already signed in. Therefore, display
             // a welcome Toast
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadNextActivity() {
         Log.d("VEERASCHAT", "Loading next activity");
-        Intent myIntent = new Intent(this, ConversationListActivity.class);
+        Intent myIntent = new Intent(this, ConversationActivity.class);
         startActivity(myIntent);
     }
 }

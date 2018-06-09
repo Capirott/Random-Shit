@@ -1,15 +1,13 @@
 package com.capirott.erick.veeraschat.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ChatConversation {
 
-    String id;
+    private String id;
 
-    Collection<String> usersId;
-
-    Collection<String> usersKey;
-
+    private Collection<String> messagesId = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -19,19 +17,15 @@ public class ChatConversation {
         this.id = id;
     }
 
-    public Collection<String> getUsersId() {
-        return usersId;
+    public Collection<String> getMessagesId() {
+        return messagesId;
     }
 
-    public void setUsersId(Collection<String> usersId) {
-        this.usersId = usersId;
+    public void setMessagesId(Collection<String> messagesId) {
+        this.messagesId = messagesId;
     }
 
-    public Collection<String> getUsersKey() {
-        return usersKey;
-    }
-
-    public void setUsersKey(Collection<String> usersKey) {
-        this.usersKey = usersKey;
+    public void addMessageId(String messageId) {
+        this.messagesId.add(messageId);
     }
 }

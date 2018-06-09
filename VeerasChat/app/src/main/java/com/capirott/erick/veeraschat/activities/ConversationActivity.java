@@ -9,11 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.capirott.erick.veeraschat.R;
+import com.capirott.erick.veeraschat.managers.ChatMessageManager;
 import com.capirott.erick.veeraschat.models.ChatMessage;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -26,7 +28,7 @@ import com.google.firebase.database.Query;
 
 public class ConversationActivity extends AppCompatActivity {
 
-    private FirebaseListAdapter<ChatMessage> adapter;
+    private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,11 @@ public class ConversationActivity extends AppCompatActivity {
 
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance()
-                        .getReference()
-                        .push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getUid())
-                        );
-
+                ChatMessage message = new ChatMessage(input.getText().toString(),
+                        FirebaseAuth.getInstance()
+                                .getCurrentUser()
+                                .getUid());
+                ChatMessageManager.save(message);
                 // Clear the input
                 input.setText("");
             }
@@ -61,26 +59,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     private void displayChatMessages() {
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = databaseReference.orderByChild("messageTime").getRef().getDatabase().getReference();
-        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, query) {
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-                // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-
-                // Set their text
-                messageText.setText(model.getText());
-                messageUser.setText(model.getUserId());
-
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                        model.getMessageTime()));
-            }
-        };
+        adapter = ChatMessageManager.getAdapter(this);
         listOfMessages.setAdapter(adapter);
         listOfMessages.setEmptyView(findViewById(R.id.empty_element));
     }
