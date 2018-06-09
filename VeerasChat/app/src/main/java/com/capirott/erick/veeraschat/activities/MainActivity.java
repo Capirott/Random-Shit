@@ -2,50 +2,107 @@ package com.capirott.erick.veeraschat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.capirott.erick.veeraschat.R;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SIGN_IN_REQUEST_CODE = 10;
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-            // Start sign in/sign up activity
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .build(),
-                    SIGN_IN_REQUEST_CODE
-            );
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             loadNextActivity();
         } else {
-            // User is already signed in. Therefore, display
-            // a welcome Toast
-            Toast.makeText(this,
-                    "Welcome " + FirebaseAuth.getInstance()
-                            .getCurrentUser()
-                            .getDisplayName(),
-                    Toast.LENGTH_LONG)
-                    .show();
-
-
-            loadNextActivity();
+            setContentView(R.layout.activity_main);
+            configureButtonAnonymously();
+            configureButtonLogin();
         }
+    }
 
+    void printWelcomeMessage() {
+        String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        if (displayName == null || displayName.isEmpty()) {
+            displayName = "Anon";
+        }
+        Toast.makeText(this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
+    }
+
+    private void configureButtonLogin() {
+        Button btnSignIn = (Button) findViewById(R.id.sign_in_button);
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    // Start sign in/sign up activity
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .build(),
+                           RC_SIGN_IN
+                    );
+                } else {
+                    printWelcomeMessage();
+                    loadNextActivity();
+                }
+            }
+        });
+    }
+
+    private void configureButtonAnonymously() {
+        Button btnSignAnonymously = (Button) findViewById(R.id.sign_in_anonymously);
+        btnSignAnonymously.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            printWelcomeMessage();
+                            loadNextActivity();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                printWelcomeMessage();
+                loadNextActivity();
+            } else {
+            }
+        }
     }
 
     private void loadNextActivity() {
-        Log.d("VEERASCHAT", "Loading next activity");
-        Intent myIntent = new Intent(this, ConversationActivity.class);
-        startActivity(myIntent);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Log.d("VEERASCHAT", "Loading next activity");
+            Intent myIntent = new Intent(this, ConversationActivity.class);
+            startActivity(myIntent);
+            finish();
+        } else {
+            Log.e("MainActivity", "User not logged in!");
+        }
     }
 }

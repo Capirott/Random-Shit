@@ -1,5 +1,6 @@
 package com.capirott.erick.veeraschat.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -85,6 +86,8 @@ public class ConversationActivity extends AppCompatActivity {
                                     .show();
 
                             // Close activity
+                            Intent myIntent = new Intent(ConversationActivity.this, MainActivity.class);
+                            startActivity(myIntent);
                             finish();
                         }
                     });
