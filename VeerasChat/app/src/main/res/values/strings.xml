@@ -3,4 +3,5 @@
     <string name="empty_messages">NO MESSAGES AVAILABLE!</string>
     <string name="empty_contacts">NO CONTACTS AVAILABLE!</string>
     <string name="signin_anonymously">Sign anonymously</string>
+    <string name="empty_users">NO USERS ONLINE</string>
 </resources>

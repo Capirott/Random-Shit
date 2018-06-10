@@ -8,9 +8,7 @@ public class ChatUser {
 
     private String nickname;
 
-    private String email;
-
-    private String password;
+    private boolean isOnline;
 
     private Collection<String> conversationsId;
 
@@ -30,22 +28,6 @@ public class ChatUser {
         this.nickname = nickname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Collection<String> getConversationsId() {
         return conversationsId;
     }
@@ -56,5 +38,13 @@ public class ChatUser {
 
     public void addConversationId(String id) {
         this.conversationsId.add(id);
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 }

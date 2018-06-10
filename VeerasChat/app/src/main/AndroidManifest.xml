@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ConversationActivity" />
-        <activity android:name=".activities.ConversationListActivity"></activity>
+        <activity android:name=".activities.RandomUserAcitivity"></activity>
     </application>
 
 </manifest>

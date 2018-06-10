@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.ConversationListActivity">
+    tools:context=".activities.RandomUserAcitivity">
 
     <ListView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:layout_above="@id/fab"
         android:dividerHeight="16dp"
         android:divider="@android:color/transparent"
-        android:id="@+id/list_of_contacts"
+        android:id="@+id/list_of_random_users"
         android:layout_marginBottom="16dp"/>
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/empty_contacts"
+        android:text="@string/empty_users"
         android:textColor="#525252"
         android:textSize="19.0sp"
         android:visibility="gone" />

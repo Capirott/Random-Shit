@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.capirott.erick.veeraschat.R;
+import com.capirott.erick.veeraschat.managers.ChatUserManager;
+import com.capirott.erick.veeraschat.models.ChatUser;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,11 +36,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void printWelcomeMessage() {
-        String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        if (displayName == null || displayName.isEmpty()) {
-            displayName = "Anon";
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String displayName = currentUser.getDisplayName();
+            if (displayName == null || displayName.isEmpty()) {
+                displayName = "Anon";
+            }
+            Toast.makeText(this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("MainActivity", "Error login in!");
         }
-        Toast.makeText(this, "Welcome " + displayName, Toast.LENGTH_LONG).show();
     }
 
     private void configureButtonLogin() {
@@ -47,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    // Start sign in/sign up activity
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -91,18 +97,22 @@ public class MainActivity extends AppCompatActivity {
                 printWelcomeMessage();
                 loadNextActivity();
             } else {
+                Log.d("MainActivity", "Error login in!");
             }
         }
     }
 
     private void loadNextActivity() {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            ChatUserManager.createOrUpdate(currentUser.getUid(), true);
             Log.d("VEERASCHAT", "Loading next activity");
-            Intent myIntent = new Intent(this, ConversationActivity.class);
+//            Intent myIntent = new Intent(this, ConversationActivity.class);
+            Intent myIntent = new Intent(this, RandomUserAcitivity.class);
             startActivity(myIntent);
             finish();
         } else {
             Log.e("MainActivity", "User not logged in!");
         }
     }
-}
+    }
