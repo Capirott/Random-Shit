@@ -19,6 +19,7 @@ import com.capirott.erick.veeraschat.core.chat.ChatContract;
 import com.capirott.erick.veeraschat.core.chat.ChatPresenter;
 import com.capirott.erick.veeraschat.events.PushNotificationEvent;
 import com.capirott.erick.veeraschat.models.Chat;
+import com.capirott.erick.veeraschat.models.User;
 import com.capirott.erick.veeraschat.ui.adapters.ChatRecyclerAdapter;
 import com.capirott.erick.veeraschat.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 
 public class ChatFragment extends Fragment implements ChatContract.View, TextView.OnEditorActionListener {
     private RecyclerView mRecyclerViewChat;
+
     private EditText mETxtMessage;
 
     private ProgressDialog mProgressDialog;
@@ -40,13 +42,11 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
 
     private ChatPresenter mChatPresenter;
 
-    public static ChatFragment newInstance(String receiver,
-                                           String receiverUid,
-                                           String firebaseToken) {
+    private User receiverUser;
+
+    public static ChatFragment newInstance(User user) {
         Bundle args = new Bundle();
-        args.putString(Constants.ARG_RECEIVER, receiver);
-        args.putString(Constants.ARG_RECEIVER_UID, receiverUid);
-        args.putString(Constants.ARG_FIREBASE_TOKEN, firebaseToken);
+        args.putSerializable(Constants.ARG_USER_RECEIVER, user);
         ChatFragment fragment = new ChatFragment();
         fragment.setArguments(args);
         return fragment;
@@ -84,6 +84,9 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
     }
 
     private void init() {
+
+        receiverUser = (User) getArguments().getSerializable(Constants.ARG_USER_RECEIVER);
+
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setTitle(getString(R.string.loading));
         mProgressDialog.setMessage(getString(R.string.please_wait));
@@ -93,7 +96,7 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
 
         mChatPresenter = new ChatPresenter(this);
         mChatPresenter.getMessage(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                getArguments().getString(Constants.ARG_RECEIVER_UID));
+                receiverUser.getUid());
     }
 
     @Override
@@ -107,11 +110,11 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
 
     private void sendMessage() {
         String message = mETxtMessage.getText().toString();
-        String receiver = getArguments().getString(Constants.ARG_RECEIVER);
-        String receiverUid = getArguments().getString(Constants.ARG_RECEIVER_UID);
+        String receiver = receiverUser.getNickname();
+        String receiverUid = getArguments().getString(receiverUser.getUid());
         String sender = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String receiverFirebaseToken = getArguments().getString(Constants.ARG_FIREBASE_TOKEN);
+        String receiverFirebaseToken = receiverUser.getFirebaseToken();
         Chat chat = new Chat(sender,
                 receiver,
                 senderUid,
@@ -149,7 +152,7 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
         try {
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            return;
+            e.printStackTrace();
         }
     }
 

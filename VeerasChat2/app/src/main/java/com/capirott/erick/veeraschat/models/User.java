@@ -1,7 +1,9 @@
 package com.capirott.erick.veeraschat.models;
 
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String uid;
     private String email;
     private String nickname;

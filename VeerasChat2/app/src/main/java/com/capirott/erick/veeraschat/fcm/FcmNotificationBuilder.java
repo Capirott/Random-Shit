@@ -105,7 +105,11 @@ public class FcmNotificationBuilder {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e(TAG, "onResponse: " + response.body().string());
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + "Notification sent!");
+                } else {
+                    Log.e(TAG, "onResponse: " + response.body().string());
+                }
             }
         });
     }

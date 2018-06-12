@@ -21,4 +21,7 @@
     <string name="are_you_sure">Are you sure ?</string>
     <string name="cancel">Cancel</string>
     <string name="login_anonymously">Login Anonymously</string>
+    <string name="action_add_friend">Add as friend</string>
+    <string name="new_friend">New Friend</string>
+    <string name="add_friend">Add Friend</string>
 </resources>

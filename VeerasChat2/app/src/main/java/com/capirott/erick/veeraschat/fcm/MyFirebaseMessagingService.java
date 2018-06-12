@@ -12,6 +12,7 @@ import android.util.Log;
 import com.capirott.erick.veeraschat.FirebaseChatMainApp;
 import com.capirott.erick.veeraschat.R;
 import com.capirott.erick.veeraschat.events.PushNotificationEvent;
+import com.capirott.erick.veeraschat.models.User;
 import com.capirott.erick.veeraschat.ui.activities.ChatActivity;
 import com.capirott.erick.veeraschat.utils.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -51,11 +52,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         uid,
                         fcmToken);
             } else {
-//                EventBus.getDefault().post(new PushNotificationEvent(title,
-//                        message,
-//                        username,
-//                        uid,
-//                        fcmToken));
+                EventBus.getDefault().post(new PushNotificationEvent(title,
+                        message,
+                        username,
+                        uid,
+                        fcmToken));
             }
         }
     }
@@ -69,9 +70,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                   String receiverUid,
                                   String firebaseToken) {
         Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra(Constants.ARG_RECEIVER, receiver);
-        intent.putExtra(Constants.ARG_RECEIVER_UID, receiverUid);
-        intent.putExtra(Constants.ARG_FIREBASE_TOKEN, firebaseToken);
+        User user = new User();
+        user.setNickname(receiver);
+        user.setUid(receiverUid);
+        user.setFirebaseToken(firebaseToken);
+        intent.putExtra(Constants.ARG_USER_RECEIVER, user);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

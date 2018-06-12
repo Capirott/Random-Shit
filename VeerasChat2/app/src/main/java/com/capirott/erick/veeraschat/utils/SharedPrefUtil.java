@@ -3,6 +3,8 @@ package com.capirott.erick.veeraschat.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.capirott.erick.veeraschat.models.User;
+
 
 public class SharedPrefUtil {
     /**

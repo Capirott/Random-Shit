@@ -35,13 +35,9 @@ public class UserListingRecyclerAdapter extends RecyclerView.Adapter<UserListing
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = mUsers.get(position);
 
-        String email = user.getEmail();
-        if (email == null || email.isEmpty()) {
-            email = "anon" + String.format("%04d", position) + "@anon.com";
-        }
-        String alphabet = email.substring(0, 1);
-
-        holder.txtUsername.setText(email);
+        String nickname = user.getNickname();
+        String alphabet = nickname.substring(0, 1);
+        holder.txtUsername.setText(nickname);
         holder.txtUserAlphabet.setText(alphabet);
     }
 

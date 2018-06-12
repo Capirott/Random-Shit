@@ -93,10 +93,8 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
 
     @Override
     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        ChatActivity.startActivity(getActivity(),
-                mUserListingRecyclerAdapter.getUser(position).getEmail(),
-                mUserListingRecyclerAdapter.getUser(position).getUid(),
-                mUserListingRecyclerAdapter.getUser(position).getFirebaseToken());
+        User user = mUserListingRecyclerAdapter.getUser(position);
+        ChatActivity.startActivity(getActivity(), user);
     }
 
     @Override
