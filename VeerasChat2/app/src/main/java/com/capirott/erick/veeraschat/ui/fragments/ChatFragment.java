@@ -111,7 +111,7 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
     private void sendMessage() {
         String message = mETxtMessage.getText().toString();
         String receiver = receiverUser.getNickname();
-        String receiverUid = getArguments().getString(receiverUser.getUid());
+        String receiverUid = receiverUser.getUid();
         String sender = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String receiverFirebaseToken = receiverUser.getFirebaseToken();

@@ -71,6 +71,14 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_chat_listing, menu);
+
+        if (user.getEmail() == null) {
+            Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is not registered!");
+            menu.findItem(R.id.action_add_friend).setVisible(false);
+        } else {
+            Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is registered!");
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 

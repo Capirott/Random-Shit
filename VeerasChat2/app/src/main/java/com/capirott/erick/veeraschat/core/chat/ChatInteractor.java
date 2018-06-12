@@ -99,7 +99,7 @@ public class ChatInteractor implements ChatContract.Interactor {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(room_type_1)) {
-                    Log.e(TAG, "getMessageFromFirebaseUser: " + room_type_1 + " exists");
+                    Log.d(TAG, "getMessageFromFirebaseUser: " + room_type_1 + " exists");
                     FirebaseDatabase.getInstance()
                             .getReference()
                             .child(Constants.ARG_CHAT_ROOMS)
@@ -131,7 +131,7 @@ public class ChatInteractor implements ChatContract.Interactor {
                         }
                     });
                 } else if (dataSnapshot.hasChild(room_type_2)) {
-                    Log.e(TAG, "getMessageFromFirebaseUser: " + room_type_2 + " exists");
+                    Log.d(TAG, "getMessageFromFirebaseUser: " + room_type_2 + " exists");
                     FirebaseDatabase.getInstance()
                             .getReference()
                             .child(Constants.ARG_CHAT_ROOMS)
@@ -163,7 +163,7 @@ public class ChatInteractor implements ChatContract.Interactor {
                         }
                     });
                 } else {
-                    Log.e(TAG, "getMessageFromFirebaseUser: no such room available");
+                    Log.d(TAG, "getMessageFromFirebaseUser: no such room available");
                 }
             }
 
