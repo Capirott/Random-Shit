@@ -79,7 +79,9 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
         getMenuInflater().inflate(R.menu.menu_chat_listing, menu);
         addFriendItem = menu.findItem(R.id.action_add_friend);
         addFriendItem.setVisible(false);
-        if (user.getEmail() == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+            Log.d("ChatActivity", "onCreateOptionsMenu: you are not registered!");
+        } else if (user.getEmail() == null) {
             Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is not registered!");
         } else {
             Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is registered!");
@@ -122,6 +124,13 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
     protected void onResume() {
         super.onResume();
         FirebaseChatMainApp.setChatActivityOpen(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        UserListingActivity.startActivity(getBaseContext());
+        finish();
     }
 
     @Override
