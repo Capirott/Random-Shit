@@ -13,11 +13,6 @@ public class LoginPresenter implements LoginContract.Presenter, LoginContract.On
     }
 
     @Override
-    public void loginAnonymously(Activity activity) {
-        mLoginInteractor.performFirebaseAnonymouslyLogin(activity);
-    }
-
-    @Override
     public void login(Activity activity, String email, String password) {
         mLoginInteractor.performFirebaseLogin(activity, email, password);
     }

@@ -11,22 +11,31 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.capirott.erick.veeraschat.FirebaseChatMainApp;
 import com.capirott.erick.veeraschat.R;
 import com.capirott.erick.veeraschat.core.friend.add.AddFriendContract;
 import com.capirott.erick.veeraschat.core.friend.add.AddFriendPresenter;
+import com.capirott.erick.veeraschat.core.friend.get.GetFriendContract;
+import com.capirott.erick.veeraschat.core.friend.get.GetFriendPresenter;
+import com.capirott.erick.veeraschat.core.users.get.all.GetUsersContract;
 import com.capirott.erick.veeraschat.models.User;
 import com.capirott.erick.veeraschat.ui.fragments.ChatFragment;
 import com.capirott.erick.veeraschat.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class ChatActivity extends AppCompatActivity implements AddFriendContract.View {
+public class ChatActivity extends AppCompatActivity implements AddFriendContract.View,GetFriendContract.View {
 
     private Toolbar mToolbar;
 
     private AddFriendPresenter mAddFriendPresenter;
 
+    private GetFriendPresenter mGetFriendPresenter;
+
     private User user;
+    private MenuItem addFriendItem;
 
     public static void startActivity(Context context, User user) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -52,8 +61,8 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Log.d("ChatActivity", "addFriend: " + user.getNickname());
-//                        mAddFriendPresenter.addFriend();
+                        Log.d("ChatActivity", "friendShipExists: " + user.getNickname());
+                        mAddFriendPresenter.addFriend(getBaseContext(), FirebaseAuth.getInstance().getCurrentUser().getUid(), user.getUid());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -63,22 +72,19 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
                     }
                 })
                 .show();
-
-
-//        Toast.makeText(this, "Friend Added!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_chat_listing, menu);
-
+        addFriendItem = menu.findItem(R.id.action_add_friend);
+        addFriendItem.setVisible(false);
         if (user.getEmail() == null) {
             Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is not registered!");
-            menu.findItem(R.id.action_add_friend).setVisible(false);
         } else {
             Log.d("ChatActivity", "onCreateOptionsMenu: " + user.getNickname() + " is registered!");
+            mGetFriendPresenter.friendShipExists(getBaseContext(), FirebaseAuth.getInstance().getCurrentUser().getUid(), user.getUid());
         }
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -100,6 +106,7 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
         setSupportActionBar(mToolbar);
 
         mAddFriendPresenter = new AddFriendPresenter(this);
+        mGetFriendPresenter = new GetFriendPresenter(this);
 
         // set toolbar title
         mToolbar.setTitle(user.getNickname());
@@ -125,11 +132,22 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
 
     @Override
     public void onAddFriendSuccess(String message) {
-
+        addFriendItem.setVisible(false);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAddFriendFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onGetFriendSuccess(String message) {
+        addFriendItem.setVisible(false);
+    }
+
+    @Override
+    public void onGetFriendFailure(String message) {
+        addFriendItem.setVisible(true);
     }
 }

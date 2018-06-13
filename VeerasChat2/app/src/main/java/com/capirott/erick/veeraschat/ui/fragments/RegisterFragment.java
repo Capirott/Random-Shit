@@ -44,6 +44,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         return fragment;
     }
 
+    private void setDummyCredentials() {
+        mETxtEmail.setText("test@test.com");
+        mETxtPassword.setText("123456");
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +83,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         mProgressDialog.setIndeterminate(true);
 
         mBtnRegister.setOnClickListener(this);
+
+        setDummyCredentials();
     }
 
     @Override

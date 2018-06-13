@@ -49,7 +49,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (TextUtils.equals(mChats.get(position).senderUid,
+        if (TextUtils.equals(mChats.get(position).getSenderUid(),
                 FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             configureMyChatViewHolder((MyChatViewHolder) holder, position);
         } else {
@@ -60,21 +60,20 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void configureMyChatViewHolder(MyChatViewHolder myChatViewHolder, int position) {
         Chat chat = mChats.get(position);
 
-
-        String sender = chat.sender;
+        String sender = chat.getSender();
 
         String alphabet = sender != null ? sender.substring(0, 1) : "A";
 
-        myChatViewHolder.txtChatMessage.setText(chat.message);
+        myChatViewHolder.txtChatMessage.setText(chat.getMessage());
         myChatViewHolder.txtUserAlphabet.setText(alphabet);
     }
 
     private void configureOtherChatViewHolder(OtherChatViewHolder otherChatViewHolder, int position) {
         Chat chat = mChats.get(position);
+        String sender = chat.getSender();
+        String alphabet = sender != null ? sender.substring(0, 1) : "A";
 
-        String alphabet = chat.sender.substring(0, 1);
-
-        otherChatViewHolder.txtChatMessage.setText(chat.message);
+        otherChatViewHolder.txtChatMessage.setText(chat.getMessage());
         otherChatViewHolder.txtUserAlphabet.setText(alphabet);
     }
 
@@ -88,7 +87,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (TextUtils.equals(mChats.get(position).senderUid,
+        if (TextUtils.equals(mChats.get(position).getSenderUid(),
                 FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             return VIEW_TYPE_ME;
         } else {

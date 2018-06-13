@@ -13,7 +13,6 @@ public interface LoginContract {
 
     interface Presenter {
         void login(Activity activity, String email, String password);
-        void loginAnonymously(Activity activity);
     }
 
     interface Interactor {

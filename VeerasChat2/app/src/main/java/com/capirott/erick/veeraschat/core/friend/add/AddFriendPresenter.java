@@ -15,8 +15,8 @@ public class AddFriendPresenter implements AddFriendContract.Presenter, AddFrien
     }
 
     @Override
-    public void addFriend(Context context, User user) {
-        mAddFriendInteractor.addFriendToDatabase(context, user);
+    public void addFriend(final Context context, final String userId, final String userId2) {
+        mAddFriendInteractor.addFriendToDatabase(context, userId, userId2);
     }
 
     @Override

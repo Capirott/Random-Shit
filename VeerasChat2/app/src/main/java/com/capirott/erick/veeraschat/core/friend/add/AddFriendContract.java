@@ -13,11 +13,11 @@ public interface AddFriendContract {
     }
 
     interface Presenter {
-        void addFriend(Context context, User user);
+        void addFriend(final Context context, final String userId, final String userId2);
     }
 
     interface Interactor {
-        void addFriendToDatabase(Context context, User user);
+        void addFriendToDatabase(final Context context, final String userId, final String userId2);
     }
 
     interface OnFriendDatabaseListener {

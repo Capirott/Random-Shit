@@ -10,4 +10,5 @@ public class Constants {
     public static final String ARG_FIREBASE_TOKEN = "firebaseToken";
     public static final String ARG_UID = "uid";
     public static final String ARG_ISANON = "is_anon";
+    public static final String CURRENTLY_USER_NICKNAME = "CURRENTLY_USER_NICKNAME";
 }

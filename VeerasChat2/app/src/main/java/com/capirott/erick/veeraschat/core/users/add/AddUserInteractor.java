@@ -1,7 +1,6 @@
 package com.capirott.erick.veeraschat.core.users.add;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.capirott.erick.veeraschat.R;
@@ -10,7 +9,6 @@ import com.capirott.erick.veeraschat.utils.Constants;
 import com.capirott.erick.veeraschat.utils.SharedPrefUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,7 +43,9 @@ public class AddUserInteractor implements AddUserContract.Interactor {
                                         value = 1;
                                     }
                                     dataSnapshot.getRef().setValue(value + 1);
-                                    user.setNickname("Anon#" + String.format("%05d", value));
+                                    String nickname = "Anon#" + String.format("%04d", value);
+                                    new SharedPrefUtil(context).saveString(Constants.CURRENTLY_USER_NICKNAME, nickname);
+                                    user.setNickname(nickname);
                                     database.child(Constants.ARG_USERS)
                                             .child(user.getUid())
                                             .setValue(user);
@@ -62,5 +62,4 @@ public class AddUserInteractor implements AddUserContract.Interactor {
                     }
                 });
     }
-
 }

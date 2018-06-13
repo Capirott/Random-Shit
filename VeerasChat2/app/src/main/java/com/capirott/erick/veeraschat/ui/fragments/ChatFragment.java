@@ -22,7 +22,9 @@ import com.capirott.erick.veeraschat.models.Chat;
 import com.capirott.erick.veeraschat.models.User;
 import com.capirott.erick.veeraschat.ui.adapters.ChatRecyclerAdapter;
 import com.capirott.erick.veeraschat.utils.Constants;
+import com.capirott.erick.veeraschat.utils.SharedPrefUtil;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -110,20 +112,26 @@ public class ChatFragment extends Fragment implements ChatContract.View, TextVie
 
     private void sendMessage() {
         String message = mETxtMessage.getText().toString();
-        String receiver = receiverUser.getNickname();
-        String receiverUid = receiverUser.getUid();
-        String sender = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String receiverFirebaseToken = receiverUser.getFirebaseToken();
-        Chat chat = new Chat(sender,
-                receiver,
-                senderUid,
-                receiverUid,
-                message,
-                System.currentTimeMillis());
-        mChatPresenter.sendMessage(getActivity().getApplicationContext(),
-                chat,
-                receiverFirebaseToken);
+        if (!message.isEmpty()) {
+            String receiver = receiverUser.getNickname();
+            String receiverUid = receiverUser.getUid();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser == null) {
+                return;
+            }
+            String sender = new SharedPrefUtil(getContext()).getString(Constants.CURRENTLY_USER_NICKNAME);
+            String senderUid = currentUser.getUid();
+            String receiverFirebaseToken = receiverUser.getFirebaseToken();
+            Chat chat = new Chat(sender,
+                    receiver,
+                    senderUid,
+                    receiverUid,
+                    message,
+                    System.currentTimeMillis());
+            mChatPresenter.sendMessage(getActivity().getApplicationContext(),
+                    chat,
+                    receiverFirebaseToken);
+        }
     }
 
     @Override
