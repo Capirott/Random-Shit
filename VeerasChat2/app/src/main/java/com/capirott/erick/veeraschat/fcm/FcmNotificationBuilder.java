@@ -110,7 +110,7 @@ public class FcmNotificationBuilder {
                 } else {
                     Log.e(TAG, "onResponse: " + response.body().string());
                 }
-                response.body().cl
+                response.body().close();
             }
         });
     }
