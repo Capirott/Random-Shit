@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.capirott.erick.veeraschat.R;
 import com.capirott.erick.veeraschat.models.Chat;
+import com.capirott.erick.veeraschat.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.List;
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_ME = 1;
     private static final int VIEW_TYPE_OTHER = 2;
+    private final User user;
 
     private List<Chat> mChats;
 
-    public ChatRecyclerAdapter(List<Chat> chats) {
+    public ChatRecyclerAdapter(List<Chat> chats, User user) {
+        this.user = user;
         mChats = chats;
     }
 
@@ -59,20 +62,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void configureMyChatViewHolder(MyChatViewHolder myChatViewHolder, int position) {
         Chat chat = mChats.get(position);
-
-        String sender = chat.getSender();
-
-        String alphabet = sender != null ? sender.substring(0, 1) : "A";
-
         myChatViewHolder.txtChatMessage.setText(chat.getMessage());
-        myChatViewHolder.txtUserAlphabet.setText(alphabet);
+        myChatViewHolder.txtUserAlphabet.setText("Y");
     }
 
     private void configureOtherChatViewHolder(OtherChatViewHolder otherChatViewHolder, int position) {
         Chat chat = mChats.get(position);
-        String sender = chat.getSender();
-        String alphabet = sender != null ? sender.substring(0, 1) : "A";
-
+        String alphabet = (user.getEmail() == null ? "A" : "R");
         otherChatViewHolder.txtChatMessage.setText(chat.getMessage());
         otherChatViewHolder.txtUserAlphabet.setText(alphabet);
     }

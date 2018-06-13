@@ -34,9 +34,9 @@ public class UserListingRecyclerAdapter extends RecyclerView.Adapter<UserListing
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = mUsers.get(position);
-
         String nickname = user.getNickname();
-        String alphabet = nickname.substring(0, 1);
+        String email = user.getEmail();
+        String alphabet = (email == null ? "A" : "R");
         holder.txtUsername.setText(nickname);
         holder.txtUserAlphabet.setText(alphabet);
     }

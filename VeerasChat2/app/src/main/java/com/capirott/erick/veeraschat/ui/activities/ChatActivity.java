@@ -35,6 +35,7 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
     private GetFriendPresenter mGetFriendPresenter;
 
     private User user;
+
     private MenuItem addFriendItem;
 
     public static void startActivity(Context context, User user) {
