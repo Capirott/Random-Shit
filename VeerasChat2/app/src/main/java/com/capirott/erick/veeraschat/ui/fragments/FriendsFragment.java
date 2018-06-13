@@ -12,33 +12,33 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.capirott.erick.veeraschat.R;
-import com.capirott.erick.veeraschat.core.users.get.all.GetUsersContract;
-import com.capirott.erick.veeraschat.core.users.get.all.GetUsersPresenter;
+import com.capirott.erick.veeraschat.core.friend.get.all.GetFriendsContract;
+import com.capirott.erick.veeraschat.core.friend.get.all.GetFriendsPresenter;
 import com.capirott.erick.veeraschat.models.User;
 import com.capirott.erick.veeraschat.ui.activities.ChatActivity;
-import com.capirott.erick.veeraschat.ui.adapters.UserListingRecyclerAdapter;
+import com.capirott.erick.veeraschat.ui.adapters.FriendListingRecyclerAdapter;
 import com.capirott.erick.veeraschat.utils.ItemClickSupport;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
 
-
-public class UsersFragment extends Fragment implements GetUsersContract.View, ItemClickSupport.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FriendsFragment extends Fragment implements GetFriendsContract.View, ItemClickSupport.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String ARG_TYPE = "type";
     public static final String TYPE_CHATS = "type_chats";
     public static final String TYPE_ALL = "type_all";
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerViewAllUserListing;
+    private RecyclerView mRecyclerViewAllFriendsListing;
 
-    private UserListingRecyclerAdapter mUserListingRecyclerAdapter;
+    private FriendListingRecyclerAdapter mFriendListingRecyclerAdapter;
 
-    private GetUsersPresenter mGetUsersPresenter;
+    private GetFriendsPresenter mGetFriendsPresenter;
 
-    public static UsersFragment newInstance(String type) {
+    public static FriendsFragment newInstance(String type) {
         Bundle args = new Bundle();
         args.putString(ARG_TYPE, type);
-        UsersFragment fragment = new UsersFragment();
+        FriendsFragment fragment = new FriendsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +53,7 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
 
     private void bindViews(View view) {
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
-        mRecyclerViewAllUserListing = (RecyclerView) view.findViewById(R.id.recycler_view_all_user_listing);
+        mRecyclerViewAllFriendsListing = (RecyclerView) view.findViewById(R.id.recycler_view_all_user_listing);
     }
 
     @Override
@@ -63,8 +63,8 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
     }
 
     private void init() {
-        mGetUsersPresenter = new GetUsersPresenter(this);
-        getUsers();
+        mGetFriendsPresenter = new GetFriendsPresenter(this);
+        getFriends();
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +72,7 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
             }
         });
 
-        ItemClickSupport.addTo(mRecyclerViewAllUserListing)
+        ItemClickSupport.addTo(mRecyclerViewAllFriendsListing)
                 .setOnItemClickListener(this);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -80,38 +80,38 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
 
     @Override
     public void onRefresh() {
-        getUsers();
+        getFriends();
     }
 
-    private void getUsers() {
+    private void getFriends() {
         if (TextUtils.equals(getArguments().getString(ARG_TYPE), TYPE_CHATS)) {
 
         } else if (TextUtils.equals(getArguments().getString(ARG_TYPE), TYPE_ALL)) {
-            mGetUsersPresenter.getAllUsers();
+            mGetFriendsPresenter.getAllFriends(FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
     }
 
     @Override
     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        User user = mUserListingRecyclerAdapter.getUser(position);
+        User user = mFriendListingRecyclerAdapter.getUser(position);
         ChatActivity.startActivity(getActivity(), user);
     }
 
     @Override
-    public void onGetAllUsersSuccess(List<User> users) {
+    public void onGetAllFriendsSuccess(List<User> users) {
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-        mUserListingRecyclerAdapter = new UserListingRecyclerAdapter(users);
-        mRecyclerViewAllUserListing.setAdapter(mUserListingRecyclerAdapter);
-        mUserListingRecyclerAdapter.notifyDataSetChanged();
+        mFriendListingRecyclerAdapter = new FriendListingRecyclerAdapter(users);
+        mRecyclerViewAllFriendsListing.setAdapter(mFriendListingRecyclerAdapter);
+        mFriendListingRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onGetAllUsersFailure(String message) {
+    public void onGetAllFriendsFailure(String message) {
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -120,5 +120,4 @@ public class UsersFragment extends Fragment implements GetUsersContract.View, It
         });
         Toast.makeText(getActivity(), "Error: " + message, Toast.LENGTH_SHORT).show();
     }
-
 }

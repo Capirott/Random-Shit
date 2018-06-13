@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.capirott.erick.veeraschat"
-        minSdkVersion 17
+        minSdkVersion 24
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"

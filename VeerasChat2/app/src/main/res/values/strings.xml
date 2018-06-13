@@ -27,4 +27,7 @@
     <string name="add_friend">Add Friend</string>
     <string name="friend_successfully_returned">Friend returned successfully!</string>
     <string name="friend_unsuccessfully_returned">Friend unsuccessfully returned!</string>
+    <string name="action_open_friends">Show Friends</string>
+    <string name="user_listing">Anon List</string>
+    <string name="friend_listing">Friend List</string>
 </resources>

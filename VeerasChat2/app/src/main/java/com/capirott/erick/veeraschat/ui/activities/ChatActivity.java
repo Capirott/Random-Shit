@@ -129,8 +129,10 @@ public class ChatActivity extends AppCompatActivity implements AddFriendContract
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        UserListingActivity.startActivity(getBaseContext());
-        finish();
+        if (isTaskRoot()) {
+            UserListingActivity.startActivity(getBaseContext());
+            finish();
+        }
     }
 
     @Override

@@ -8,7 +8,7 @@ import com.capirott.erick.veeraschat.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final int SPLASH_TIME_MS = 100;
+    private static final int SPLASH_TIME_MS = 3000;
     private Handler mHandler;
     private Runnable mRunnable;
 

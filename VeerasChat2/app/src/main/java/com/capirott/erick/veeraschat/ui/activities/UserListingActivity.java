@@ -53,7 +53,7 @@ public class UserListingActivity extends AppCompatActivity implements LogoutCont
     private void init() {
         // set the toolbar
         setSupportActionBar(mToolbar);
-
+        mToolbar.setTitle(R.string.user_listing);
         // set the view pager adapter
         UserListingPagerAdapter userListingPagerAdapter = new UserListingPagerAdapter(getSupportFragmentManager());
         mViewPagerUserListing.setAdapter(userListingPagerAdapter);
@@ -76,8 +76,15 @@ public class UserListingActivity extends AppCompatActivity implements LogoutCont
             case R.id.action_logout:
                 logout();
                 break;
+            case R.id.action_show_friends:
+                showFriends();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showFriends() {
+        FriendListingActivity.startActivity(this);
     }
 
     private void logout() {
