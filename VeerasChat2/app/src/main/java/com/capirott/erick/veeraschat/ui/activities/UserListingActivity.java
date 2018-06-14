@@ -17,6 +17,7 @@ import com.capirott.erick.veeraschat.R;
 import com.capirott.erick.veeraschat.core.logout.LogoutContract;
 import com.capirott.erick.veeraschat.core.logout.LogoutPresenter;
 import com.capirott.erick.veeraschat.ui.adapters.UserListingPagerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserListingActivity extends AppCompatActivity implements LogoutContract.View {
     private Toolbar mToolbar;
@@ -67,6 +68,7 @@ public class UserListingActivity extends AppCompatActivity implements LogoutCont
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_user_listing, menu);
+        menu.findItem(R.id.action_show_friends).setVisible(!FirebaseAuth.getInstance().getCurrentUser().isAnonymous());
         return super.onCreateOptionsMenu(menu);
     }
 
